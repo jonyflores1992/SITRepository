@@ -1,0 +1,66 @@
+﻿@model SIT.Models.Area
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Area</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Area1" class="control-label"></label>
+                <input asp-for="Area1" class="form-control" />
+                <span asp-validation-for="Area1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdSucursal" class="control-label"></label>
+                <select asp-for="IdSucursal" class="form-control" asp-items="ViewBag.IdSucursal"></select>
+                <span asp-validation-for="IdSucursal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateAt" class="control-label"></label>
+                <input asp-for="UpdateAt" class="form-control" />
+                <span asp-validation-for="UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Delete" class="control-label"></label>
+                <input asp-for="Delete" class="form-control" />
+                <span asp-validation-for="Delete" class="text-danger"></span>
+            </div>
+            <button type="submit" id="btnGuardar" class=" btn btn-primary m-1" style="width:120px;height:35px; font-size:medium;">
+                <i class="fas fa-save"></i>
+                Guardar
+
+            </button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <button asp-action="Index" id="btnRegresar" class=" btn btn-success m-1" style="width:120px;height:35px;font-size:medium;">
+        <i class="fas fa-backward"></i>
+        Regresar
+
+    </button>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

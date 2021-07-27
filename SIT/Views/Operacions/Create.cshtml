@@ -1,0 +1,145 @@
+﻿@model SIT.Models.Operacion
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Operacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Operacion1" class="control-label">Operacion</label>
+                <input asp-for="Operacion1" class="form-control" />
+                <span asp-validation-for="Operacion1" class="text-danger"></span>
+            </div>
+            <div class="col-6">
+                <label class="control-label" style="font-size:larger; font-style:oblique;color:black">Sucursal:</label>
+                <select id="IdSucursal" class="form-control" onchange="FillArea()" asp-items="ViewBag.IdSucursal"></select>
+            </div>
+            <div class="col-md-2">
+                <label>Area</label>
+
+                @Html.DropDownList("IdArea",
+                                                                           new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Area1"),
+                                                                                  "Seleccione Area",
+                                                                                  new { @class = "form-control", @onchange = "FillSector()", id = "IdArea" })
+
+
+            </div>
+
+            <div class="col-md-2">
+                <label>Sector</label>
+
+                @Html.DropDownList("IdSector",
+                                                                           new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Sector1"),
+                                                                                  "Seleccione Sector",
+                                                                                  new { @class = "form-control", @onchange = "FillGrupoRecursos()", id = "IdSector" })
+
+
+            </div>
+            @*<div class="col-6">
+
+            <label asp-for="IdSector" class="control-label">Sector:</label>
+            <select asp-for="IdSector" class="form-control" onchange="FillGrupoRecursos()" asp-items="ViewBag.IdSector"></select>
+
+        </div>*@
+            @*<div class="col-6">
+            <label asp-for="IdGrupoRecursoPrincipal" class="control-label">Grupo Recurso:</label>
+            <select asp-for="IdGrupoRecursoPrincipal" class="form-control" asp-items="ViewBag.IdGrupoRecursoPrincipal"></select>
+        </div>*@
+            <div class="col-md-2">
+                @Html.LabelFor(m => m.IdGrupoRecurso)
+
+                @Html.DropDownListFor(m => m.IdGrupoRecurso,
+                                                       new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Grupo"),
+                                                              "Seleccione Grupo",
+                                                              new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.IdGrupoRecurso, "", new { @class = "text-danger" })
+
+            </div>
+            @*<div class="form-group">
+            <label asp-for="IdGrupoRecurso" class="control-label">Grupo de Recurso</label>
+            <select asp-for="IdGrupoRecurso" class ="form-control" asp-items="ViewBag.IdGrupoRecurso"></select>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateAt" class="control-label"></label>
+                <input asp-for="UpdateAt" class="form-control" />
+                <span asp-validation-for="UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+
+    function FillGrupoRecursos() {
+        var SectorId = $('#IdSector').val();
+        $.ajax({
+            url: '/Operacions/FillGrupoRecurso',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdSector: SectorId },
+            success: function (Grupos) {
+                $("#IdGrupoRecurso").html(""); // clear before appending new list 
+                $.each(Grupos, function (i, Grupo) {
+                    $("#IdGrupoRecurso").append(
+                        $('<option></option>').val(Grupo.Id).html(Grupo.Grupo));
+                });
+            }
+        });
+    }
+
+    function FillArea() {
+        var SucursalId = $('#IdSucursal').val();
+        $.ajax({
+            url: '/Operacions/FillArea',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdSucursal: SucursalId },
+            success: function (Areas) {
+                $("#IdArea").html(""); // clear before appending new list
+                $.each(Areas, function (i, Area) {
+                    $("#IdArea").append(
+                        $('<option></option>').val(Area.Id).html(Area.Area1));
+                });
+            }
+        });
+    }
+
+    function FillSector() {
+        var AreaId = $('#IdArea').val();
+        $.ajax({
+            url: '/Operacions/FillSector',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdArea: AreaId },
+            success: function (Sectores) {
+                $("#IdSector").html(""); // clear before appending new list
+                $.each(Sectores, function (i, Sector) {
+                    $("#IdSector").append(
+                        $('<option></option>').val(Sector.Id).html(Sector.Sector1));
+                });
+            }
+        });
+    }
+</script>

@@ -1,0 +1,88 @@
+﻿@model SIT.Models.TrMovimiento
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>TrMovimiento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaHoraInicio" class="control-label"></label>
+                <input asp-for="FechaHoraInicio" class="form-control" />
+                <span asp-validation-for="FechaHoraInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaHoraFin" class="control-label"></label>
+                <input asp-for="FechaHoraFin" class="form-control" />
+                <span asp-validation-for="FechaHoraFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEstado" class="control-label"></label>
+                <input asp-for="IdEstado" class="form-control" />
+                <span asp-validation-for="IdEstado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Productividad" class="control-label"></label>
+                <input asp-for="Productividad" class="form-control" />
+                <span asp-validation-for="Productividad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRecurso" class="control-label"></label>
+                <input asp-for="IdRecurso" class="form-control" />
+                <span asp-validation-for="IdRecurso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdMovimiento" class="control-label"></label>
+                <select asp-for="IdMovimiento" class="form-control" asp-items="ViewBag.IdMovimiento"></select>
+                <span asp-validation-for="IdMovimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdActividad" class="control-label"></label>
+                <input asp-for="IdActividad" class="form-control" />
+                <span asp-validation-for="IdActividad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateAt" class="control-label"></label>
+                <input asp-for="UpdateAt" class="form-control" />
+                <span asp-validation-for="UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Delete" class="control-label"></label>
+                <input asp-for="Delete" class="form-control" />
+                <span asp-validation-for="Delete" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

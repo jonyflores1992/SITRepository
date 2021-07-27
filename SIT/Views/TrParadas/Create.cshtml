@@ -1,0 +1,76 @@
+﻿@model SIT.Models.TrParada
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>TrParada</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdMotivoParada" class="control-label"></label>
+                <select asp-for="IdMotivoParada" class ="form-control" asp-items="ViewBag.IdMotivoParada"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodoTiempoInicio" class="control-label"></label>
+                <input asp-for="PeriodoTiempoInicio" class="form-control" />
+                <span asp-validation-for="PeriodoTiempoInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PeriodoTiempoFin" class="control-label"></label>
+                <input asp-for="PeriodoTiempoFin" class="form-control" />
+                <span asp-validation-for="PeriodoTiempoFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InicioReal" class="control-label"></label>
+                <input asp-for="InicioReal" class="form-control" />
+                <span asp-validation-for="InicioReal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinReal" class="control-label"></label>
+                <input asp-for="FinReal" class="form-control" />
+                <span asp-validation-for="FinReal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDetalleDeParada" class="control-label"></label>
+                <select asp-for="IdDetalleDeParada" class ="form-control" asp-items="ViewBag.IdDetalleDeParada"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Horas" class="control-label"></label>
+                <input asp-for="Horas" class="form-control" />
+                <span asp-validation-for="Horas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Retroactiva" class="control-label"></label>
+                <input asp-for="Retroactiva" class="form-control" />
+                <span asp-validation-for="Retroactiva" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTrMovimiento" class="control-label"></label>
+                <select asp-for="IdTrMovimiento" class ="form-control" asp-items="ViewBag.IdTrMovimiento"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateAt" class="control-label"></label>
+                <input asp-for="UpdateAt" class="form-control" />
+                <span asp-validation-for="UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

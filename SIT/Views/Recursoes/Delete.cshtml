@@ -1,0 +1,105 @@
+﻿@model SIT.Models.Recurso
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>¿Está seguro que desea eliminar este registro?</h3>
+<div>
+    <h4>Recurso</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductividadDeseada)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductividadDeseada)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Costo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Costo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CodigoBarra)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CodigoBarra)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TurnoNoche)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TurnoNoche)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Foto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Foto)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdActividadNavigation)*@
+            Actividad
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdActividadNavigation.Actividad1)
+        </dd class>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdGrupoRecursoPrincipalNavigation)*@
+            Grupo de recurso principal
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdGrupoRecursoPrincipalNavigation.Grupo)
+        </dd class>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdSectorNavigation)*@
+            Sector
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdSectorNavigation.Sector1)
+        </dd class>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdUnidadMedidaNavigation)*@
+            Unidad de medida
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdUnidadMedidaNavigation.UnidadDeMedida1)
+        </dd class>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.StatusNavigation)*@
+            Estatus
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StatusNavigation.Status)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

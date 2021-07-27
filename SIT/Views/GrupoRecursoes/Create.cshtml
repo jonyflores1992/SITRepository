@@ -1,0 +1,135 @@
+﻿@model SIT.Models.FileUpload
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+<script type="text/javascript">
+
+    $(document).ready(function (){
+        $('.custom-file-input').on("change", function () {
+            var filename = $(this).val().split("\\").pop();
+            $(this).next('.custom-file-label').html(filename);
+        });
+    });
+
+  
+    function FillArea(){
+        var SucursalId = $('#IdSucursal').val();
+        $.ajax({
+            url: '/GrupoRecursoes/FillArea',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdSucursal: SucursalId },
+            success: function (Areas) {
+                $("#IdArea").html(""); // clear before appending new list
+                $.each(Areas, function (i, Area) {
+                    $("#IdArea").append(
+                        $('<option></option>').val(Area.Id).html(Area.Area1));
+                });
+            }
+        });
+    }
+
+    function FillSector() {
+        var AreaId = $('#IdArea').val();
+        $.ajax({
+            url: '/GrupoRecursoes/FillSector',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdArea: AreaId },
+            success: function (Sectores) {
+                $("#IdSector").html(""); // clear before appending new list
+                $.each(Sectores, function (i, Sector) {
+                    $("#IdSector").append(
+                        $('<option></option>').val(Sector.Id).html(Sector.Sector1));
+                });
+            }
+        });
+    }
+
+</script>
+@using (Html.BeginForm("Create", "GrupoRecursoes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h1>Crear Nuevo</h1>
+
+    <h4>GrupoRecurso</h4>
+    <hr />
+    <div class="flex">
+
+        <form asp-action="Create">
+            <div class="row">
+
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="col-6">
+                    <label asp-for="Grupo" class="control-label" style="font-size:larger; font-style:oblique;color:black">Grupo:</label>
+                    <input asp-for="Grupo" class="form-control" />
+                    <span asp-validation-for="Grupo" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label class="control-label" style="font-size:larger; font-style:oblique;color:black">Sucursal:</label>
+                    <select id="IdSucursal" class="form-control" onchange="FillArea()" asp-items="ViewBag.Sucursal"></select>
+                </div>
+                <div class="col-md-2">
+                    <label>Area</label>
+
+                    @Html.DropDownList("IdArea",
+                                                                     new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Area1"),
+                                                                            "Seleccione Area",
+                                                                            new { @class = "form-control", @onchange = "FillSector()", id = "IdArea" })
+
+
+                </div>
+
+                <div class="col-md-2">
+                    <label>Sector</label>
+
+                    @Html.DropDownList("IdSector",
+                                                                     new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Sector1"),
+                                                                            "Seleccione Sector",
+                                                                            new { @class = "form-control", id = "IdSector" })
+
+
+                </div>
+         
+                <div class="col-6">
+                    <label asp-for="Status" class="control-label" style="font-size:larger; font-style:oblique;color:black">Estado:</label>
+                    <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+                </div>
+                <div class="col-6">
+                    <label asp-for="IdUnidadMedida" class="control-label" style="font-size:larger; font-style:oblique;color:black">UM:</label>
+                    <select asp-for="IdUnidadMedida" class="form-control" asp-items="ViewBag.IdUnidadMedida"></select>
+
+                </div>
+                <div class="col-6">
+                    <label asp-for="rutaFoto" class="control-label" style="font-size:larger; font-style:oblique;color:black">Foto:</label>
+                    <div class="col-6">
+                        <div class="custom-file">
+
+                            <input asp-for="rutaFoto" class="form-control custom-file-input" />
+                            <label class="custom-file-label">Seleccione un fichero</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button asp-action="Index" id="btnRegresar" class=" btn btn-success m-1" style="width:120px;height:35px;font-size:medium;">
+                        <i class="fas fa-backward"></i>
+                        Regresar
+
+                    </button>
+                    <button type="submit" id="btnGuardar" class=" btn btn-primary m-1" style="width:120px;height:35px; font-size:medium;">
+                        <i class="fas fa-save"></i>
+                        Crear
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+}

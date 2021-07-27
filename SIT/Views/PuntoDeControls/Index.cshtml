@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SIT.Models.PuntoDeControl>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="Tabla" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Punto de Control
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescripcionUbicacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Long)
+            </th>
+            <th>
+                Operacion
+                @*@Html.DisplayNameFor(model => model.IdOperacionNavigation)*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PuntoDeControl1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescripcionUbicacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Long)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdOperacionNavigation.Operacion1)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

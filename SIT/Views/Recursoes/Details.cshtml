@@ -1,0 +1,182 @@
+﻿@model SIT.Models.Recurso
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+    var rutafoto = "~/images/" + (Model.Foto ?? "SinFoto.png");
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h5>Recursos</h5>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="flex">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="card-header">
+                            <h3>
+                                Nombre:
+                                @Html.DisplayFor(model => model.Nombre)
+
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-header">
+                            <h3>
+                                Fecha Nacimiento:
+                                @Html.DisplayFor(model => model.FechaNacimiento)
+
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-header">
+                            <h3>
+                                ER:
+                                @Html.DisplayFor(model => model.ProductividadDeseada)
+
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-header">
+                            <h3>
+                                Costo:
+                                @Html.DisplayFor(model => model.Costo)
+
+                            </h3>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="flex">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-header">
+                            <h3>
+                                Codigo:
+                                @Html.DisplayFor(model => model.Codigo)
+
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="card-header">
+                            <h3>
+                                Codigo Barra:
+                                @Html.DisplayFor(model => model.CodigoBarra)
+
+                            </h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="card-header">
+                            <h3>
+                                Turno:
+                                @Html.DisplayFor(model => model.TurnoNoche)
+
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="card-header">
+                            <h3>
+                                Actividad:
+
+                                @Html.DisplayFor(model => model.IdActividadNavigation.Actividad1)
+
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="card-header">
+                            <h3>
+                                Grupo Recurso:
+                                @Html.DisplayFor(model => model.IdGrupoRecursoPrincipalNavigation.Grupo)
+
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="card-header">
+                            <h3>
+                                Sector:
+                                @Html.DisplayFor(model => model.IdSectorNavigation.Sector1)
+
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-header">
+                            <h3>
+                                Estado:
+                                @Html.DisplayFor(model => model.StatusNavigation.Status)
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-header">
+                            <h3>
+                                UM:
+                                @Html.DisplayFor(model => model.IdUnidadMedidaNavigation.UnidadDeMedida1)
+
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header">
+
+                <h3>@Html.DisplayNameFor(model => model.Foto)</h3>
+            </div>
+            <div class="col-sm-10">
+                <img class="card-img-top image" src="@rutafoto" asp-append-version="true" />
+            </div>
+
+        </div>
+        </div>
+    </div>
+<div>
+    <a asp-action="Index" class="btn btn-success m-1">
+        <i class="fas fa-backward"></i>
+        Regresar
+    </a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary m-1">
+        <i class="fas fa-save"></i>
+        Editar
+    </a>
+</div>
+<style>
+    .image {
+        height: 300px;
+        width: 300px;
+    }
+</style>

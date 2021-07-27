@@ -1,0 +1,1015 @@
+﻿@model SIT.Models.TrMovimiento
+
+@{ ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+<script src="~/js/main.js"></script> }
+
+
+<h2 style="text-align:center">Movimiento Manual</h2>
+<hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div id="DivBotonesEncabezado" role="tablist" aria-multiselectable="true" class="card-header-tabs">
+                    <div class="card card-group">
+                        <div class="card-header" id="encabezado1" style="display:none">
+                            <div class="btn-group d-none d-lg-flex">
+                                <button type="button" class="btn btn-outline-primary" id="btnmodelo1">Modelo 2</button>
+                                <button type="button" class="btn btn-outline-primary" id="btnparada">Parada</button>
+                                 <button type="button" class="btn btn-outline-danger"><a asp-action="Index">Salir</a></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-4" id="DivIdRecurso" style="display:none">
+                        <label>Id</label>
+                        <input type="text" id="IdRecursoOnline" class="form-control" readonly />
+                    </div>
+                    <div class="col-md-2">
+                        <label>Fecha</label>
+                        <input asp-for="Fecha" class="form-control" id="FechaP" type="date" />
+                    </div>
+                    <div class="col-md-2">
+                        <label>Sector</label>
+                        <select asp-for="IdSector" id="IdSector" class="form-control" asp-items="ViewBag.IdSector" onchange="FillGrupoRecursos()" title="Sector..."></select>
+                    </div>
+                   <div class="col-md-2">
+                            @Html.LabelFor(m => m.IdGrupoRecurso)
+                           
+                                @Html.DropDownListFor(m => m.IdGrupoRecurso,
+                                                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Grupo"),
+                                                               "Seleccione Grupo",
+                                                               new { @class = "form-control", @onchange = "FillRecursos()" })
+                                @Html.ValidationMessageFor(m => m.IdGrupoRecurso, "", new { @class = "text-danger" })
+                           
+                   </div>
+                    
+                    @*<div class="col-md-2">
+            <label>Grupo de recursos</label>
+            <select asp-for="IdGrupoRecurso" id="IdGrupoRecurso" class="form-control" asp-items="ViewBag.IdGrupoRecurso" title="Grupo de recurso..."></select>
+        </div>*@
+                   
+                        <div class="col-md-2">
+                            @Html.LabelFor(m => m.IdRecurso)
+                                @Html.DropDownListFor(m => m.IdRecurso,
+                                                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Nombre"),
+                                                               "Seleccione Recurso",
+                                                               new { @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.IdRecurso, "", new { @class = "text-danger" })
+                           
+                        </div>
+                    
+                    @*<div class="col-md-2">
+                        <label>Recurso</label>
+                        <select asp-for="IdRecurso" id="Recurso" class="form-control" asp-items="ViewBag.IdRecurso" title="Recurso..."></select>
+
+
+                    </div>*@
+                    <div class="col-md-2" id="DivBoton">
+
+                        <button class=" btn-success btn-lg" id="BTN_Crear" style="padding-top:10px;padding-bottom:25px;text-align:center; font-size:large">
+                            <span class="fa fa-play" style="font-size:large"></span><span>&nbsp; Iniciar Recurso</span>
+                        </button>
+
+                    </div>
+                    <div class=" col-md-2 ml-auto">
+                        <div id="time" style="font-size:250%;">
+                        </div>
+                    </div>
+                </div>
+                    </div>
+        </div>
+    </div>
+
+
+    <div id="NuevaProduccion" style="display:none">
+        <h1 style="text-align:center">Apontamiento de Produccion</h1>
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label>Inicio</label>
+                                <select data-val="true" onchange="SeleccionarFin()" class="form-control" data-val-required="Seleccionar Horas es requerido" id="Inicio" name="Inicio">
+                                    <option value="">Seleccione</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="14:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="24:00">24:00</option>
+                                    <option value="01:00">01:00</option>
+                                    <option value="02:00">02:00</option>
+                                    <option value="03:00">03:00</option>
+                                    <option value="04:00">04:00</option>
+                                    <option value="05:00">05:00</option>
+                                    <option value="06:00">06:00</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-1">
+                                <label>Fin</label>
+                                <select data-val="true" class="form-control" data-val-required="Seleccionar Horas es requerido" id="Fin" name="Fin">
+                                    <option value="">Seleccione</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="13:00">14:00</option>
+                                    <option value="14:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="24:00">24:00</option>
+                                    <option value="01:00">01:00</option>
+                                    <option value="02:00">02:00</option>
+                                    <option value="03:00">03:00</option>
+                                    <option value="04:00">04:00</option>
+                                    <option value="05:00">05:00</option>
+                                    <option value="06:00">06:00</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Producto</label>
+                                <select id="Producto" class="form-control" onchange="LlenarComponentes()" asp-items="ViewBag.IdProducto"></select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Componente</label>
+
+                                @Html.DropDownListFor(m => m.IdActividadNavigation.IdComponente,
+                                                                            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Componente1"),
+                                                                                   "Seleccione Componente",
+                                                                                   new { @class = "form-control", @onchange = "FillRecursos()", id = "Componente" })
+
+
+                            </div>
+             
+                            <div class="col-md-2">
+                                <label>Operacion</label>
+
+                                @Html.DropDownListFor(m => m.IdActividadNavigation.IdOperacion,
+                                                                            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Operacion1"),
+                                                                                   "Seleccione Operacion",
+                                                                                   new { @class = "form-control", @onchange = "FillRecursos()", id = "Operacion" })
+
+
+                            </div>
+                            @*<div class="col-md-4">
+                    <label>Operacion</label>
+                    <select id="Operacion" class="form-control" asp-items="ViewBag.Operaciones"></select>
+                </div>*@
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="customRange1" class="form-label">Minutos</label>
+                                        <input type="range" class="form-range" oninput="calculateDisponibles()" min="0" max="1440" step="1" value="30" id="MinutosDisponibles">
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Minutos</label>
+
+                                        <input disabled="disabled" id="Minutoscal" type="number" class="form-control" value="0" />
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Disponible</label>
+                                        <input id="Disponible" type="number" onchange="calculateDisponibles1()" class="form-control" value="0" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Cantidad</label>
+                                        <input type="number" id="Cantidad" class="form-control" value="0" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <label>
+                            Primera Parada
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="0" id="CheckParada1">
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>1° Parada</label>
+
+                        <select data-val="true" class="form-control" data-val-required="Seleccionar Horas es requerido" id="1parada" name="1parada">
+                            <option value="">Seleccione</option>
+                            <option value="07:00">07:00</option>
+                            <option value="08:00">08:00</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+                            <option value="24:00">24:00</option>
+                            <option value="01:00">01:00</option>
+                            <option value="02:00">02:00</option>
+                            <option value="03:00">03:00</option>
+                            <option value="04:00">04:00</option>
+                            <option value="05:00">05:00</option>
+                            <option value="06:00">06:00</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>1° Reinicio</label>
+                        <select data-val="true" class="form-control" data-val-required="Seleccionar Horas es requerido" id="1reinicio" name="1reinicio">
+                            <option value="">Seleccione</option>
+                            <option value="07:00">07:00</option>
+                            <option value="08:00">08:00</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+                            <option value="24:00">24:00</option>
+                            <option value="01:00">01:00</option>
+                            <option value="02:00">02:00</option>
+                            <option value="03:00">03:00</option>
+                            <option value="04:00">04:00</option>
+                            <option value="05:00">05:00</option>
+                            <option value="06:00">06:00</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Motivo Parada</label>
+                        <select id="MotParada1" class="form-control" onchange="FillDetalleParada()" asp-items="ViewBag.IdMotivoParada"></select>
+                    </div>
+                    @*<div class="col-md-4">
+
+            <select id="DetalleParada1" class="form-control" asp-items="ViewBag.IdDetalleParada"></select>
+        </div>*@
+                    <div class="col-md-4">
+                        <label>Detalle Parada</label>
+                        @Html.DropDownList("IdDetalleDeParada",
+                                                          new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "DetalleDeParada1"),
+                                                                 "Seleccione Detalle Parada",
+                                                                 new { @class = "form-control", id = "DetalleParada1" })
+
+
+                    </div>
+
+
+
+
+                    <div class="col-md-1">
+                        <label>
+                            Segunda Parada
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="" id="CheckParada2">
+
+                    </div>
+                    <div class="col-md-2">
+                        <label>2° Parada</label>
+                        <select data-val="true" class="form-control" data-val-required="Seleccionar Horas es requerido" id="2parada" name="2parada">
+                            <option value="">Seleccione</option>
+                            <option value="07:00">07:00</option>
+                            <option value="08:00">08:00</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+                            <option value="24:00">24:00</option>
+                            <option value="01:00">01:00</option>
+                            <option value="02:00">02:00</option>
+                            <option value="03:00">03:00</option>
+                            <option value="04:00">04:00</option>
+                            <option value="05:00">05:00</option>
+                            <option value="06:00">06:00</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>2° Reinicio</label>
+                        <select data-val="true" class="form-control" data-val-required="Seleccionar Horas es requerido" id="2reinicio" name="2reinicio">
+                            <option value="">Seleccione</option>
+                            <option value="07:00">07:00</option>
+                            <option value="08:00">08:00</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+                            <option value="24:00">24:00</option>
+                            <option value="01:00">01:00</option>
+                            <option value="02:00">02:00</option>
+                            <option value="03:00">03:00</option>
+                            <option value="04:00">04:00</option>
+                            <option value="05:00">05:00</option>
+                            <option value="06:00">06:00</option>
+
+                        </select>
+                    </div>
+                    <div class="col-md3">
+                        <label>Motivo Parada</label>
+                        <select id="MotParada2" onchange="FillDetalleParada2()" class="form-control" asp-items="ViewBag.IdMotivoParada"></select>
+                    </div>
+                    @*<div class="col-md-4">
+                        <label>Detalle Parada</label>
+                        <select id="DetalleParada2" class="form-control" asp-items="ViewBag.IdDetalleParada"></select>
+                    </div>*@
+                    <div class="col-md-4">
+                        <label>Detalle Parada</label>
+                        @Html.DropDownList("IdDetalleDeParada",
+                                                          new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "DetalleDeParada1"),
+                                                                 "Seleccione Detalle Parada",
+                                                                 new { @class = "form-control", id = "DetalleParada2" })
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="padding-bottom:10px">
+            <div class="row" style="float:right">
+                <div class="col-md-4" style="float:right">
+                    <button id="ER" class="btn btn-outline-primary">
+
+                        <span class="fa fa-info-circle" style="font-size:medium"></span><span>Detalle E/R</span>
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <button id="Apontar1" class="btn btn-outline-primary">
+                        <span class="fa fa-plus-circle" style="font-size:medium"></span><span>apuntar</span>
+                    </button>
+                </div>
+                <div class="col-md-4" style="float:right">
+                    <button id="Cancelar1" class="btn btn-outline-primary">
+
+                        <span class="fa fa-window-close" style="font-size:medium"></span><span>Cancelar</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="NuevaParada" style="display:none">
+        <h1 style="text-align:center">Apontamiento de Parada</h1>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-md-2">
+                                <label>Inicio</label>
+                                <select data-val="true" class="form-control" data-val-required="Seleccionar Horas es requerido" id="PeriodoTiempoInicio" name="PeriodoTiempoInicio">
+                                    <option value="">Seleccione</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="14:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="24:00">24:00</option>
+                                    <option value="01:00">01:00</option>
+                                    <option value="02:00">02:00</option>
+                                    <option value="03:00">03:00</option>
+                                    <option value="04:00">04:00</option>
+                                    <option value="05:00">05:00</option>
+                                    <option value="06:00">06:00</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Fin</label>
+                                <select data-val="true" class="form-control" data-val-required="Seleccionar Horas es requerido" id="PeriodoTiempoFin" name="PeriodoTiempoFin">
+                                    <option value="">Seleccione</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="13:00">14:00</option>
+                                    <option value="14:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="24:00">24:00</option>
+                                    <option value="01:00">01:00</option>
+                                    <option value="02:00">02:00</option>
+                                    <option value="03:00">03:00</option>
+                                    <option value="04:00">04:00</option>
+                                    <option value="05:00">05:00</option>
+                                    <option value="06:00">06:00</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Motivo Parada</label>
+                                <select id="MotParada" class="form-control" onchange="FillParadaDetalle()" asp-items="ViewBag.IdMotivoParada"></select>
+                            </div>
+                            @*<div class="col-md-4">
+            <label>Detalle Parada</label>
+            <select id="DetalleParada" class="form-control" asp-items="ViewBag.IdDetalleParada"></select>
+        </div>*@
+
+                            <div class="col-md-4">
+                                <label>Detalle Parada</label>
+                                @Html.DropDownList("IdDetalleDeParada",
+                                                                       new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "DetalleDeParada1"),
+                                                                              "Seleccione Detalle Parada",
+                                                                              new { @class = "form-control", id = "DetalleParada" })
+
+
+                            </div>
+                            <div class="col-md-3">
+                                <label for="customRange1" class="form-label">Minutos</label>
+                                <input type="range" class="form-range" oninput="calculateDisponiblesParada()" min="0" max="1440" step="1" value="60" id="MinutosParada">
+
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Minutos</label>
+                                <input id="MinutosParadaCalculado" disabled="disabled" type="number" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="control-label">Horas</label>
+                                <input id="HorasParada" onchange="calculateDisponiblesParada1()" class="form-control" />
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Recurso Parda de:</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="padding-bottom:10px">
+                <div class="row" style="float:right">
+                    <div class="col-md-4" style="margin-left:90px">
+                        <button id="ApontarParada" class="btn btn-outline-primary">
+                            <span class="fa fa-pause" style="font-size:medium"></span><span>Registrar Parada</span>
+                        </button>
+                    </div>
+                    <div class="col-md-5" style="float:right">
+                        <button id="CancelarParada" class="btn btn-outline-primary">
+
+                            <span class="fa fa-window-close" style="font-size:medium"></span><span>Cancelar Parada</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12">
+        <div class="card-body">
+            <div id="divGetTodo">
+
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
+    function FillGrupoRecursos() {
+        var SectorId = $('#IdSector').val();
+        $.ajax({
+            url: '/TrMovimientosManual/FillGrupoRecurso',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdSector: SectorId },
+            success: function (Grupos) {
+                $("#IdGrupoRecurso").html(""); // clear before appending new list 
+                $.each(Grupos, function (i, Grupo) {
+                    $("#IdGrupoRecurso").append(
+                        $('<option></option>').val(Grupo.Id).html(Grupo.Grupo));
+                });
+            }
+        });
+    }
+    
+    function FillRecursos() {
+        var GrupoId = $('#IdGrupoRecurso').val();
+        $.ajax({
+            url: '/TrMovimientosManual/FillRecurso',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdGrupoRecurso: GrupoId },
+            success: function (Recursos) {
+                $("#IdRecurso").html(""); // clear before appending new list 
+                $.each(Recursos, function (i, Recurso) {
+                    $("#IdRecurso").append(
+                        $('<option></option>').val(Recurso.Id).html(Recurso.Nombre));
+                });
+            }
+        });
+
+        FillOperacion();
+    }
+    function FillOperacion() {
+        var GrupoId = $('#IdGrupoRecurso').val();
+        $.ajax({
+            url: '/TrMovimientosManual/FillOperacion',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdGrupoRecurso: GrupoId },
+            success: function (Operaciones) {
+                $("#Operacion").html(""); // clear before appending new list 
+                $.each(Operaciones, function (i, Operacion) {
+                    $("#Operacion").append(
+                        $('<option></option>').val(Operacion.Id).html(Operacion.Operacion1));
+                });
+            }
+        });
+
+      
+    }
+
+     function LlenarComponentes() {
+        var ProductoId = $('#Producto').val();
+        $.ajax({
+            url: '/TrMovimientosManual/FillComponentes',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdProducto: ProductoId },
+            success: function (Componentes) {
+                $("#Componente").html(""); // clear before appending new list 
+                $.each(Componentes, function (i, Componente) {
+                    $("#Componente").append(
+                        $('<option></option>').val(Componente.Id).html(Componente.Componente1));
+                });
+            }
+        });
+    }
+    //id="MotParada1" class="form-control" onchange="FillDetalleParada()
+    function FillDetalleParada() {
+        var ParadaId = $('#MotParada1').val();
+        $.ajax({
+            url: '/TrMovimientosManual/FillDetalleParada',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdMotivoParada: ParadaId },
+            success: function (DetalleParadas) {
+                $("#DetalleParada1").html(""); // clear before appending new list 
+                $.each(DetalleParadas, function (i, Parada) {
+                    $("#DetalleParada1").append(
+                        $('<option></option>').val(Parada.Id).html(Parada.DetalleDeParada1));
+                });
+            }
+        });
+    }
+
+    
+    function FillDetalleParada2() {
+        var ParadaId = $('#MotParada2').val();
+        $.ajax({
+            url: '/TrMovimientosManual/FillDetalleParada',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdMotivoParada: ParadaId },
+            success: function (DetalleParadas) {
+                $("#DetalleParada2").html(""); // clear before appending new list 
+                $.each(DetalleParadas, function (i, Parada) {
+                    $("#DetalleParada2").append(
+                        $('<option></option>').val(Parada.Id).html(Parada.DetalleDeParada1));
+                });
+            }
+        });
+    }
+
+    // id="MotParada" class="form-control" onchange="FillParadaDetalle()"
+    function FillParadaDetalle() {
+        var ParadaId = $('#MotParada').val();
+        $.ajax({
+            url: '/TrMovimientosManual/FillDetalleParada',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdMotivoParada: ParadaId },
+            success: function (DetalleParadas) {
+                $("#DetalleParada").html(""); // clear before appending new list 
+                $.each(DetalleParadas, function (i, Parada) {
+                    $("#DetalleParada").append(
+                        $('<option></option>').val(Parada.Id).html(Parada.DetalleDeParada1));
+                });
+            }
+        });
+    }
+    function calculate() {
+
+        var amount = document.getElementById("MinutosParada");
+        var horas = parseFloat(amount.value)/60;
+        $("#HorasParada").val(horas);
+        $("#MinutosParadaCalculado").val(amount.value);
+
+
+
+    }
+    //Calculo Horas Produccion
+    function calculateDisponibles() {
+
+        var Monto = document.getElementById("MinutosDisponibles");
+        var horas = parseFloat(Monto.value)/60;
+        $("#Disponible").val(horas);
+        $("#Minutoscal").val(Monto.value);
+        $("#MinutosDisponibles").val(($("#Disponible").val())*60);
+
+
+    }
+    function calculateDisponibles1() {
+
+       
+        $("#MinutosDisponibles").val(($("#Disponible").val()) * 60);
+        $("#Minutoscal").val(($("#Disponible").val()) * 60);
+
+
+    }
+    //Calculos Horas parada.
+    function calculateDisponiblesParada() {
+
+        var Monto = document.getElementById("MinutosParada");
+        var horas = parseFloat(Monto.value) / 60;
+        $("#HorasParada").val(horas);
+        $("#MinutosParadaCalculado").val(Monto.value);
+       /* $("#MinutosDisponiblesParada").val(($("#HorasParada").val()) * 60);*/
+
+
+    }
+    function calculateDisponiblesParada1() {
+
+
+        $("#MinutosParadaCalculado").val(($("#HorasParada").val()) * 60);
+        $("#MinutosParada").val(($("#HorasParada").val()) * 60);
+
+
+    }
+
+    //SeleccionarFin
+    function SeleccionarFin() {
+
+        
+        //$('select#Fin').index($('#Inicio option:selected').index() + 1) ;
+    
+    }
+        $(document).ready(function () {
+
+                    });
+        $("#btnmodelo1").click(function () {
+            var newProduccion = document.getElementById("NuevaProduccion");
+            newProduccion.style.display = 'block';
+        });
+        $("#Apontar1").click(function () {
+            var newProduccion = document.getElementById("NuevaProduccion");
+            newProduccion.style.display = 'none';
+        });
+        $("#Cancelar1").click(function () {
+            var newProduccion = document.getElementById("NuevaProduccion");
+            newProduccion.style.display = 'none';
+        });
+        $("#btnparada").click(function () {
+            var newProduccion = document.getElementById("NuevaParada");
+            newProduccion.style.display = 'block';
+        });
+        $("#ApontarParada").click(function () {
+            var newProduccion = document.getElementById("NuevaParada");
+            newProduccion.style.display = 'none';
+        });
+        $("#CancelarParada").click(function () {
+            var newProduccion = document.getElementById("NuevaParada");
+            newProduccion.style.display = 'none';
+        });
+    function guardarParada(motivoParada,perInicio,perFin,detaParada,idRecursoM,dispo,horasPrd) {
+         var urls = "@Url.Action("SaveTrParada", "TrMovimientosManual")"
+        //var fecha = $("#FechaP").val();
+        //var encabezado = document.getElementById("encabezado1");
+        var idMotivoParada = motivoParada;
+        var periodoTiempoInicio = perInicio;
+        var periodoTiempoFin = perFin;
+        var detalleParada = detaParada;
+        var idTrMovimiento = idRecursoM;
+        var disponible = dispo;
+
+
+        var horas = horasPrd;
+        var data = {
+            IdMotivoParada: idMotivoParada,
+            PeriodoTiempoFin: periodoTiempoFin,
+            PeriodoTiempoInicio: periodoTiempoInicio,
+            FinReal: periodoTiempoFin,
+            InicioReal: periodoTiempoInicio,
+            IdDetalleDeParada: detalleParada,
+            IdTrMovimiento: idTrMovimiento,
+            Horas: horas
+          //  Retroactiva: Retro,
+           // Horas: "100",
+
+
+        };
+
+        $.post(urls, data).done(function (data) {
+            if (data.Ok) {
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                //encabezado.style.display = 'block';
+                document.getElementById("DivIdRecurso").style.display = 'block';
+                document.getElementById("DivBoton").style.display = 'none';
+                $("#IdRecursoOnline").val(data.Id);
+
+
+                                                document.getElementById("FechaP").disabled = true;
+                document.getElementById("Recurso").disabled = true;
+           
+                                            }
+                                            else {
+                                                manejarErrorAjax();
+                                            }
+
+                                        }).fail(manejarErrorAjax).always(function () {
+                                        });
+    }
+
+    function manejarErrorAjax() {
+        Swal.fire({
+            icon: 'error',
+            title: "Se Produjo un Error",
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+    }
+    $("#BTN_Crear").click(function () {
+        var urls = "@Url.Action("SaveMovimientoManual", "TrMovimientosManual")"
+        var fecha = $("#FechaP").val();
+        var encabezado = document.getElementById("encabezado1");
+        var recurso = $("#IdRecurso").val();
+        var data = {
+            Fecha: fecha,
+            IdRecurso: recurso,
+            IdTipoMovimiento: "0FD4CC2D-C26D-442A-991B-C9A0469AADA9",
+            IdEstado: "1E49CBEA-D13A-4CC4-B608-EE9E8D32ADC5"
+
+        };
+
+        $.post(urls, data).done(function (data) {
+
+            if (data.Ok) {
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                encabezado.style.display = 'block';
+                document.getElementById("DivIdRecurso").style.display = 'block';
+                document.getElementById("DivBoton").style.display = 'none';
+                $("#IdRecursoOnline").val(data.Id);
+               // $("#idTrMovimiento").val(data.IdTrMovimiento);
+
+                document.getElementById("FechaP").disabled = true;
+                document.getElementById("IdRecurso").disabled = true;
+                document.getElementById("IdSector").disabled = true;
+                document.getElementById("IdGrupoRecurso").disabled = true;
+                //TraerDatosProduccion(data.Id);
+                //TraerDatosParada(data.Id);
+               // CheckParada1
+               
+                TraerDatosTabla(data.Id);
+
+                                            }
+                                            else {
+                                                manejarErrorAjax();
+                                            }
+
+                                        }).fail(manejarErrorAjax).always(function () {
+                                        });
+    });
+
+    $("#ER").click(function () {
+        var urls = "@Url.Action("ERMovimientoManual", "TrMovimientosManual")"
+
+
+        var movimiento = $("#IdRecursoOnline").val();
+        var data = {
+
+            Id: movimiento
+
+
+        };
+
+        $.post(urls, data).done(function (data) {
+
+            if (data.Ok) {
+
+
+                Swal.fire({
+                    title: data.Mensaje,
+                    showConfirmButton: true,
+
+                });
+
+
+                                            }
+                                            else {
+                                                manejarErrorAjax();
+                                            }
+
+                                        }).fail(manejarErrorAjax).always(function () {
+                                        });
+                                    });
+
+     $("#Apontar1").click(function () {
+        var urls = "@Url.Action("SaveTrProduccion", "TrMovimientosManual")"
+
+         var producto = $("#Producto").val();
+         var inicio = $("#Inicio").val();
+         var fin = $("#Fin").val();
+         var componente = $("#Componente").val();
+         var operacion = $("#Operacion").val();
+         var disponible = $("#Disponible").val();
+         var cantidad = $("#Cantidad").val();
+         var recurso = $("#IdRecurso").val();
+         var trMovimiento = $("#IdRecursoOnline").val();
+        var data = {
+            PeriodoTiempoInicio: inicio,
+            PeriodoTiempoFin: fin,
+            InicioReal: inicio,
+            FinReal:fin,
+            IdProducto: producto,
+            IdComponente: componente,
+            IdOperacion: operacion,
+           // Productiva: "100",
+            Disponibles: disponible,
+           // Productividad: "100",
+            Cantidad: cantidad,
+            IdRecurso: recurso,
+            IdTrMovimiento: trMovimiento
+
+        };
+
+        $.post(urls, data).done(function (data) {
+            if (data.Ok) {
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                //encabezado.style.display = 'block';
+                document.getElementById("DivIdRecurso").style.display = 'block';
+                document.getElementById("DivBoton").style.display = 'none';
+                $("#IdRecursoOnline").val(data.Id);
+
+
+                                                document.getElementById("FechaP").disabled = true;
+                document.getElementById("IdRecurso").disabled = true;
+                //TraerDatosProduccion(data.Id);
+                //TraerDatosParada(data.Id);
+                const cb1 = document.getElementById('CheckParada1');
+                const cb2 = document.getElementById('CheckParada2');
+                if ((cb1.checked)) {
+                //1parada 1reinicio
+                guardarParada($("#MotParada1").val(), $("#1parada").val(), $("#1reinicio").val(), $("#DetalleParada1").val(), $("#IdRecursoOnline").val(), 0, parseFloat($("#1reinicio").val() - $("#1parada").val()));
+
+                 }
+                if (cb2.checked) {
+                    guardarParada($("#MotParada2").val(), $("#2parada").val(), $("#2reinicio").val(), $("#DetalleParada2").val(), $("#IdRecursoOnline").val(), 0, parseFloat($("#1reinicio").val() - $("#1parada").val()));
+                }
+                TraerDatosTabla(data.Id);
+            } else {
+                manejarErrorAjax();
+            }
+
+             }).fail(manejarErrorAjax).always(function () {});});
+
+    $("#ApontarParada").click(function () {
+        guardarParada($("#MotParada").val(), $("#PeriodoTiempoInicio").val(), $("#PeriodoTiempoFin").val(), $("#DetalleParada").val(), $("#IdRecursoOnline").val(), $("#Disponible").val(), $("#HorasParada").val());
+        TraerDatosTabla($("#IdRecursoOnline").val());
+
+    });
+
+
+       function TraerDatosTabla(id) {
+        var urlt = "@Url.Action("GetDatosTabla", "TrMovimientosManual")"
+        var data = { Id: id };
+        $.get(urlt, data).done(function (data) {
+            $("#Tabla_wrapper").remove()
+            $("#productividad").remove()
+            $("#productividadlabel").remove()
+            $("#divGetTodo").append(data);
+
+
+
+        }).fail(manejarErrorAjax);
+    }
+
+    
+
+</script>
+

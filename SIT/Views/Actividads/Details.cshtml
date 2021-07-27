@@ -1,0 +1,104 @@
+﻿@model SIT.Models.Actividad
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Actividad</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.Actividad1)*@
+            Actividad
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actividad1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Umrecurso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Umrecurso)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Instrucciones)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Instrucciones)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CodigoBarra)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CodigoBarra)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FactorConversion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FactorConversion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Er)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Er)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdComponenteNavigation)*@
+            Componente
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdComponenteNavigation.Descripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdGrupoRecursoNavigation)*@
+            Grupo de recurso
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdGrupoRecursoNavigation.Grupo)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdOperacionNavigation)*@
+            Operación
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdOperacionNavigation.Operacion1)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdProductoNavigation)*@
+            Producto
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdProductoNavigation.Producto1)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.IdUnidadMedidaNavigation)*@
+            Unidad de medida
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdUnidadMedidaNavigation.UnidadDeMedida1)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.StatusNavigation)*@
+            Estatus
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StatusNavigation.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index" class="btn btn-link">Back to List</a>
+</div>

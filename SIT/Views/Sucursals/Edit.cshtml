@@ -1,0 +1,46 @@
+﻿@model SIT.Models.Sucursal
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Sucursal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Sucursal1" class="control-label"></label>
+                <input asp-for="Sucursal1" class="form-control" />
+                <span asp-validation-for="Sucursal1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idSinAgro" class="control-label"></label>
+                <input asp-for="idSinAgro" class="form-control" />
+                <span asp-validation-for="idSinAgro" class="text-danger"></span>
+            </div>
+            <button type="submit" id="btnGuardar" class=" btn btn-primary m-1" style="width:120px;height:35px; font-size:medium;">
+                <i class="fas fa-save"></i>
+                Guardar
+
+            </button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <button asp-action="Index" id="btnRegresar" class=" btn btn-success m-1" style="width:120px;height:35px;font-size:medium;">
+        <i class="fas fa-backward"></i>
+        Regresar
+
+    </button>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

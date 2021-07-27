@@ -1,0 +1,96 @@
+﻿@model IEnumerable<SIT.Models.Lectura>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoBarra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Linea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SerialDispositivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaHora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaHoraLector)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRecursoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdGrupoRecursoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdActividadNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSectorNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPuntoDeControlNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoBarra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Linea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialDispositivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaHora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaHoraLector)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRecursoNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdGrupoRecursoNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdActividadNavigation.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSectorNavigation.Sector1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPuntoDeControlNavigation.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

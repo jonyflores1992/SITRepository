@@ -1,0 +1,231 @@
+﻿@model SIT.Models.Actividad
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Actividad</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Actividad1" class="control-label">Actividad</label>
+                <input asp-for="Actividad1" class="form-control" />
+                <span asp-validation-for="Actividad1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdProducto" class="control-label">Producto</label>
+                <select asp-for="IdProducto" onchange="LlenarComponentes()" class="form-control" asp-items="ViewBag.IdProducto"></select>
+            </div>
+            <div class="form-group">
+                <label>Componente</label>
+
+                @Html.DropDownListFor(m => m.IdComponente,
+                                                            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Componente1"),
+                                                                   "Seleccione Componente",
+                                                                   new { @class = "form-control" })
+
+
+            </div>
+            @*<div class="form-group">
+            <label asp-for="IdComponente" class="control-label">Componente</label>
+            <select asp-for="IdComponente" class="form-control" asp-items="ViewBag.IdComponente"></select>
+        </div>*@
+            <div class="form-group">
+                <label class="control-label" style="font-size:larger; font-style:oblique;color:black">Sucursal:</label>
+                <select id="IdSucursal" class="form-control" onchange="FillArea()" asp-items="ViewBag.IdSucursal"></select>
+            </div>
+            <div class="form-group">
+                <label>Area</label>
+
+                @Html.DropDownList("IdArea",
+                                                                           new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Area1"),
+                                                                                  "Seleccione Area",
+                                                                                  new { @class = "form-control", @onchange = "FillSector()", id = "IdArea" })
+
+
+            </div>
+
+            <div class="form-group">
+                <label>Sector</label>
+
+                @Html.DropDownList("IdSector",
+                                                                           new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Sector1"),
+                                                                                  "Seleccione Sector",
+                                                                                  new { @class = "form-control", @onchange = "FillGrupoRecursos()", id = "IdSector" })
+
+
+            </div>
+   
+            <div class="form-group">
+                @Html.LabelFor(m => m.IdGrupoRecurso)
+
+                @Html.DropDownListFor(m => m.IdGrupoRecurso,
+                                                       new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Grupo"),
+                                                              "Seleccione Grupo",
+                                                              new { @class = "form-control", @onchange = "FillOperacion()" })
+                @Html.ValidationMessageFor(m => m.IdGrupoRecurso, "", new { @class = "text-danger" })
+
+            </div>
+            @*<div class="form-group">
+                <label asp-for="IdGrupoRecurso" class="control-label">Grupo</label>
+                <select asp-for="IdGrupoRecurso" onchange="FillOperacion()" class="form-control" asp-items="ViewBag.IdGrupoRecurso"></select>
+            </div>*@
+            @*<div class="form-group">
+            <label asp-for="Umrecurso" class="control-label"></label>
+            <input asp-for="Umrecurso" class="form-control" />
+            <span asp-validation-for="Umrecurso" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="IdOperacion" class="control-label">Operacion</label>
+            <select asp-for="IdOperacion" class="form-control" asp-items="ViewBag.IdOperacion"></select>
+        </div>*@
+            <div class="form-group">
+                <label>Operacion</label>
+
+                @Html.DropDownListFor(m => m.IdOperacion,
+                                                            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Operacion1"),
+                                                                   "Seleccione Operacion",
+                                                                   new { @class = "form-control" })
+
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Instrucciones" class="control-label"></label>
+                <input asp-for="Instrucciones" class="form-control" />
+                <span asp-validation-for="Instrucciones" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodigoBarra" class="control-label"></label>
+                <input asp-for="CodigoBarra" class="form-control" />
+                <span asp-validation-for="CodigoBarra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdUnidadMedida" class="control-label">UnidadMedida</label>
+                <select asp-for="IdUnidadMedida" class="form-control" asp-items="ViewBag.IdUnidadMedida"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FactorConversion" class="control-label"></label>
+                <input asp-for="FactorConversion" class="form-control" />
+                <span asp-validation-for="FactorConversion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Er" class="control-label"></label>
+                <input asp-for="Er" class="form-control" />
+                <span asp-validation-for="Er" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script>
+    function LlenarComponentes() {
+        var ProductoId = $('#IdProducto').val();
+        $.ajax({
+            url: '/Actividads/FillComponentes',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdProducto: ProductoId },
+            success: function (Componentes) {
+                $("#IdComponente").html(""); // clear before appending new list 
+                $.each(Componentes, function (i, Componente) {
+                    $("#IdComponente").append(
+                        $('<option></option>').val(Componente.Id).html(Componente.Componente1));
+                });
+            }
+        });
+    }
+    function FillOperacion() {
+        var GrupoId = $('#IdGrupoRecurso').val();
+        $.ajax({
+            url: '/Actividads/FillOperacion',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdGrupoRecurso: GrupoId },
+            success: function (Operaciones) {
+                $("#IdOperacion").html(""); // clear before appending new list 
+                $.each(Operaciones, function (i, Operacion) {
+                    $("#IdOperacion").append(
+                        $('<option></option>').val(Operacion.Id).html(Operacion.Operacion1));
+                });
+            }
+        });
+
+
+    }
+
+    function FillGrupoRecursos() {
+        var SectorId = $('#IdSector').val();
+        $.ajax({
+            url: '/Actividads/FillGrupoRecurso',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdSector: SectorId },
+            success: function (Grupos) {
+                $("#IdGrupoRecurso").html(""); // clear before appending new list 
+                $.each(Grupos, function (i, Grupo) {
+                    $("#IdGrupoRecurso").append(
+                        $('<option></option>').val(Grupo.Id).html(Grupo.Grupo));
+                });
+            }
+        });
+    }
+
+    function FillArea() {
+        var SucursalId = $('#IdSucursal').val();
+        $.ajax({
+            url: '/Actividads/FillArea',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdSucursal: SucursalId },
+            success: function (Areas) {
+                $("#IdArea").html(""); // clear before appending new list
+                $.each(Areas, function (i, Area) {
+                    $("#IdArea").append(
+                        $('<option></option>').val(Area.Id).html(Area.Area1));
+                });
+            }
+        });
+    }
+
+    function FillSector() {
+        var AreaId = $('#IdArea').val();
+        $.ajax({
+            url: '/Actividads/FillSector',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdArea: AreaId },
+            success: function (Sectores) {
+                $("#IdSector").html(""); // clear before appending new list
+                $.each(Sectores, function (i, Sector) {
+                    $("#IdSector").append(
+                        $('<option></option>').val(Sector.Id).html(Sector.Sector1));
+                });
+            }
+        });
+    }
+</script>

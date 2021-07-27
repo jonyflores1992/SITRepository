@@ -1,0 +1,33 @@
+﻿@model SIT.Models.UnidadDeMedida
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>UnidadDeMedida</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.UnidadDeMedida1)*@
+            Unidad de medida
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnidadDeMedida1)
+        </dd>
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.StatusNavigation)*@
+            Estatus
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StatusNavigation.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

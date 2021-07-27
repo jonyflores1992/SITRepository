@@ -1,0 +1,55 @@
+﻿@model SIT.Models.Sector
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+    var rutafoto = "~/images/" + (Model.Foto ?? "SinFoto.png");
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Sector</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-header">
+                <h3>Sector: @Html.DisplayFor(model => model.Sector1)</h3>
+            </div>
+
+            <div class="card-header">
+                <h3>Orden: @Html.DisplayFor(model => model.Orden)</h3>
+            </div>
+            <div class="card-header">
+                <h3>Estado: @Html.DisplayFor(model => model.StatusNavigation.Status)</h3>
+            </div>
+            <div class="card-header">
+                <h3>Area: @Html.DisplayFor(model => model.IdAreaNavigation.Area1)</h3>
+            </div>
+            <div class="card-header">
+
+                <h3>@Html.DisplayNameFor(model => model.Foto)</h3>
+            </div>
+            <div class="col-sm-10">
+                <img class="card-img-top image" src="@rutafoto" asp-append-version="true" />
+            </div>
+        </div>
+        </div>
+</div>
+<div>
+
+    <a asp-action="Index" class="btn btn-success m-1">
+        <i class="fas fa-backward"></i>
+        Regresar
+    </a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary m-1">
+        <i class="fas fa-save"></i>
+        Editar
+    </a>
+</div>
+<style>
+    .image{
+        height:300px;
+        width:300px;
+    }
+</style>

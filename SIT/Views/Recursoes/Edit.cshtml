@@ -1,0 +1,180 @@
+﻿@model SIT.Models.FileUpload
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+    var rutafoto = "~/images/" + (Model.Foto ?? "SinFoto.png");
+}
+
+@using (Html.BeginForm("Edit", "Recursoes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h1>Editar</h1>
+
+    <h4>Recurso</h4>
+    <hr />
+    <div class="flex">
+        <form asp-action="Edit">
+            <div class="row">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Foto" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="col-6">
+                    <label asp-for="Nombre" class="control-label">Nombre:</label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="IdSector" class="control-label">Sector:</label>
+                    <select asp-for="IdSector" class="form-control" asp-items="ViewBag.IdSector"></select>
+                    <span asp-validation-for="IdSector" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="IdGrupoRecursoPrincipal" class="control-label">Grupo Recurso:</label>
+                    <select asp-for="IdGrupoRecursoPrincipal" class="form-control" asp-items="ViewBag.IdGrupoRecursoPrincipal"></select>
+                    <span asp-validation-for="IdGrupoRecursoPrincipal" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="FechaNacimiento" class="control-label">Fecha Nacimiento:</label>
+                    <input asp-for="FechaNacimiento" class="form-control" />
+                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="IdUnidadMedida" class="control-label">UM:</label>
+                    <select asp-for="IdUnidadMedida" class="form-control" asp-items="ViewBag.IdUnidadMedida"></select>
+                    <span asp-validation-for="IdUnidadMedida" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="ProductividadDeseada" class="control-label">ER:</label>
+                    <input asp-for="ProductividadDeseada" class="form-control" />
+                    <span asp-validation-for="ProductividadDeseada" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="Costo" class="control-label">Costo:</label>
+                    <input asp-for="Costo" class="form-control" />
+                    <span asp-validation-for="Costo" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="CodigoBarra" class="control-label">Codigo Barra:</label>
+                    <input asp-for="CodigoBarra" class="form-control" />
+                    <span asp-validation-for="CodigoBarra" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="Codigo" class="control-label">Codigo:</label>
+                    <input asp-for="Codigo" class="form-control" />
+                    <span asp-validation-for="Codigo" class="text-danger"></span>
+                </div>
+
+                <div class="col-6">
+                    <label asp-for="Status" class="control-label">Estado:</label>
+                    <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="IdActividad" class="control-label">Actividad:</label>
+                    <select asp-for="IdActividad" class="form-control" asp-items="ViewBag.IdActividad"></select>
+                    <span asp-validation-for="IdActividad" class="text-danger"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="Foto" class="control-label">Foto:</label>
+                    <div class="custom-file">
+                        <input asp-for="rutaFoto" id="txtfile" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Seleccione un fichero</label>
+                    </div>
+                    <div class="col-md-4">
+                        <img id="imgViewer" class="card-img-top image" src="@rutafoto" asp-append-version="true" />
+                    </div>
+                </div>
+                <div>
+
+                    <button asp-action="Index" id="btnRegresar" class=" btn btn-success m-1" style="width:120px;height:35px;font-size:medium;">
+                        <i class="fas fa-backward"></i>
+                        Regresar
+
+                    </button>
+                    <button type="submit" id="btnGuardar" class=" btn btn-primary m-1" style="width:120px;height:35px; font-size:medium;">
+                        <i class="fas fa-save"></i>
+                        Guardar
+
+                    </button>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <style>
+        .image {
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var filename = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(filename);
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+        $("#txtfile").change(function (event) {
+            var files = event.target.files;
+            $("#imgViewer").attr("src", window.URL.createObjectURL(files[0]));
+        });
+        $("#btnread").click(function () {
+            $.ajax({
+
+                type: "G    ET",
+                url: "/Home/GetSavedSector",
+                success: function (data) {
+                    $("#txtSector").val(data.Sector);
+                    $("#TXTOrden").val(data.Orden);
+                    $("#imgViewer").attr("src", "data:image/jpg;base64," + data.Foto + "");
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+        $("#btnsave").click(function () {
+            var files = $("#txtfile").prop("files");
+            var formdata = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formdata.append("file", files[i]);
+            }
+            var oSector = {
+                Sector1: $("#txtSector").val(),
+                Orden: $("#TXTOrden").val(),
+                Status: $("#Status").val(),
+            };
+            formdata.append("Sector", JSON.stringify(oSector));
+            $.ajax({
+
+                type: "POST",
+                url: "/Sectors/SaveSector",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    ResetFields();
+                    alert(data);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+        function ResetFields() {
+            $("#txtSector,#TXTOrden").val("");
+            $("#imgViewer").attr("src", "");
+        }
+
+
+    </script>
+}
+

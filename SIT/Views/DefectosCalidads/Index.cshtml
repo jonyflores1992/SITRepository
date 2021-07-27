@@ -1,0 +1,141 @@
+﻿@model IEnumerable<SIT.Models.DefectosCalidad>
+
+@{
+    ViewData["Title"] = "Index";
+    // Layout = "~/Views/Shared/SidebarMenu.cshtml";
+    // <script src="~/js/main.js"></script>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<div id="view-all">
+    <h2 style="text-align:center">Indice</h2>
+    
+    <table id="Tabla" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Codigo
+                </th>
+                <th>
+                    Sector
+                </th>
+                <th>
+                    Grupo
+                </th>
+                <th>
+                    Recurso
+                </th>
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Componente
+                </th>
+                <th>
+                    Defecto
+                </th>
+                <th>
+                    status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdSectorNavigation.Sector1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdgruporecursoNavigation.Grupo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdrecurosNavigation.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdproductoNavigation.Producto1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdcomponenteNavigation.Componente1)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Defecto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusNavigation.Status)
+                    </td>
+
+                    <td>
+                        <a onclick="ShowInPopup('@Url.Action("CreateDefecto","DefectosCalidads",new {id=item.Id },Context.Request.Scheme)','Actualizar Defecto')" class="btn btn-info text-white"><i class="fas fa-pencil"></i>Edit</a>
+                        @*<a asp-action="Edit" asp-route-id="@item.Id" class="text-info" data-toggle="tooltip" data-placement="left" title="Editar"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16"><path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" /> </svg></a> |*@
+                        @*<a asp-action="Details" asp-route-id="@item.Id" class="text-info" data-toggle="tooltip" data-placement="left" title="Detalles"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" /><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" /></svg></a> |*@
+
+                        <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return JQueryAjaxDeleteDefecto(this);" class="d-inline">
+                            <button type="submit" data-toggle="tooltip" data-placement="left" title="Borrar">
+
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    JQueryAjaxDelete = form => {
+        if (confirm("Desea Eliminar el registro?")) {
+            try {
+
+                $.ajax({
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+
+                        if (res.Ok) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Eliminado con exito',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            Redirigir();
+                        }
+
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Hubo un Error',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hubo un Error',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                })
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+        return false;
+    }
+</script>
+

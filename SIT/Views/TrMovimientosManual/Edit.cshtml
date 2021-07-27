@@ -1,0 +1,236 @@
+﻿@model SIT.Models.TrMovimiento
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>TrMovimiento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaHoraInicio" class="control-label"></label>
+                <input asp-for="FechaHoraInicio" class="form-control" />
+                <span asp-validation-for="FechaHoraInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaHoraFin" class="control-label"></label>
+                <input asp-for="FechaHoraFin" class="form-control" />
+                <span asp-validation-for="FechaHoraFin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdEstado" class="control-label"></label>
+                <select asp-for="IdEstado" class="form-control" asp-items="ViewBag.IdEstado"></select>
+                <span asp-validation-for="IdEstado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Productividad" class="control-label"></label>
+                <input asp-for="Productividad" class="form-control" />
+                <span asp-validation-for="Productividad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Producido" class="control-label"></label>
+                <input asp-for="Producido" class="form-control" />
+                <span asp-validation-for="Producido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="Disponible" class="control-label"></label>
+                <input asp-for="Disponible" class="form-control" />
+                <span asp-validation-for="Disponible" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="IdRecurso" class="control-label"></label>
+                <select asp-for="IdRecurso" class="form-control" asp-items="ViewBag.IdRecurso"></select>
+                <span asp-validation-for="IdRecurso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdGrupoRecurso" class="control-label"></label>
+                <select asp-for="IdGrupoRecurso" class="form-control" asp-items="ViewBag.IdGrupoRecurso"></select>
+                <span asp-validation-for="IdGrupoRecurso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdSector" class="control-label"></label>
+                <select asp-for="IdSector" class="form-control" asp-items="ViewBag.IdSector"></select>
+                <span asp-validation-for="IdSector" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTipoMovimiento" class="control-label"></label>
+                <select asp-for="IdTipoMovimiento" class="form-control" asp-items="ViewBag.IdTipoMovimiento"></select>
+                <span asp-validation-for="IdTipoMovimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdActividad" class="control-label"></label>
+                <select asp-for="IdActividad" class="form-control" asp-items="ViewBag.IdActividad"></select>
+                <span asp-validation-for="IdActividad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateAt" class="control-label"></label>
+                <input asp-for="UpdateAt" class="form-control" />
+                <span asp-validation-for="UpdateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Delete" class="control-label"></label>
+                <input asp-for="Delete" class="form-control" />
+                <span asp-validation-for="Delete" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    @*<div class="col-md-4">
+            @Html.Partial("_AgregarProduccion", 1);
+        </div>*@
+
+    <table id="TablaProduccions" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                   PeriodoTiempoInicio
+                </th>
+                <th>
+                   PeriodoTiempoFin
+                </th>
+                <th>
+                   InicioReal
+                </th>
+                <th>
+                    FinReal
+                </th>
+                <th>
+                    Productiva
+                </th>
+                <th>
+                  Disponible
+                </th>
+                <th>
+                    Productividad
+                </th>
+                <th>
+                   Cantidad
+                </th>
+                <th>
+                    CreatedAt
+                </th>
+                <th>
+                    UpdateAt
+                </th>
+                <th>
+                    Delete
+                </th>
+                <th>
+                    IdComponenteNavigation
+                </th>
+                <th>
+                 IdGrupoRecursoNavigation
+                </th>
+                <th>
+                   IdOperacionNavigation
+                </th>
+                <th>
+                    IdProductoNavigation
+                </th>
+                <th>
+                   IdRecursoNavigation
+                </th>
+                <th>
+                   IdTrMovimientoNavigation
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="TablaProduccion">
+       
+        </tbody>
+    </table>
+
+
+ 
+
+</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+<script>
+
+    window.addEventListener("load", function (event) {
+        console.log("'Todos los recursos terminaron de cargar!");
+        GetJson('/api/TrProduccionAPI/?tokens=55C3444C-D463-4FE9-8F9D-93EBCAF69788', 1, 'GET');
+    });
+    
+
+    function GetJson(Url, metodo, type) { //Metodo de get para json desde en webmethod
+        $.ajax({
+            type: type,
+            url: Url,
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                sucess(metodo, response);
+            },
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+                $('#post').html(msg);
+            },
+        });
+    }
+    function sucess(value, response) { // metodo de llamado de get json exitosa
+        if (value == 1) {//llega grafico
+            OnSuccess(response);
+        }
+
+        if (value == 2) {//llega grafico
+            OnSuccess(response);
+        }
+    }
+
+    function OnSuccess(response) {
+        $('#TablaProduccion').remove();//clean tabla
+    //fill row tabla with data
+        var row = '';
+    $.each(response, function (i, d) {
+        row += '<tr><td style="font-weight: bold;width:20%" >' + response[i].Id +
+            '</td><td style="font-size:12pt;width:50%" >' + response[i].Id +
+            '</td><td style="font-size:12pt;width:30%" >' + response[i].Id +
+            '</td></tr>';
+    });
+        $('#TablaProduccions').append(row);
+    }
+
+
+</script>

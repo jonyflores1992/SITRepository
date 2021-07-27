@@ -1,0 +1,440 @@
+﻿@model SIT.Models.TrMovimiento
+
+@{ ViewData["Title"] = "Create";
+                Layout = "~/Views/Shared/SidebarMenu.cshtml";
+    <script src="~/js/main.js"></script>
+    }
+<h2 style="text-align:center">Movimiento Online</h2>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div id="DivBotonesEncabezado" role="tablist" aria-multiselectable="true" class="card-header-tabs">
+                <div class="card card-group">
+                    <div class="card-header" id="encabezado1" style="display:none">
+                        <div class="btn-group d-none d-lg-flex">
+                            <button type="button" class="btn btn-outline-primary" id="btnmodelo1">Apuntar</button>
+                            <button type="button" class="btn btn-outline-primary" id="btnparada">Parada</button>
+                            <button type="button" class="btn btn-outline-primary" id="btnretroativa">Retroativa</button>
+                            <button type="button" class="btn btn-outline-danger" id="btnencerrar">Encerrar</button>
+
+                            <button type="button" class="btn btn-outline-primary" id="btnreiniciar" disabled>Reiniciar</button>
+
+                            <button type="button" class="btn btn-outline-info" id="BTN_LISTAR1">Listar</button>
+                            <button type="button" class="btn btn-outline-info" id="BTN_INFO">Info</button>
+                            <button type="button" class="btn btn-outline-danger">Salir</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4" id="DivIdRecurso" style="display:none">
+                    <label>Id</label>
+                    <input type="text" id="IdRecursoOnline" class="form-control" readonly />
+                </div>
+                <div class="col-md-2">
+                    <label>Fecha</label>
+                    <input asp-for="Fecha" class="form-control" id="FechaP" type="date" />
+                </div>
+                <div class="col-md-2">
+                    <label>Recurso</label>
+                    <select asp-for="IdRecurso" id="Recurso" onchange="LlenarOperacion()" class="form-control" asp-items="ViewBag.IdRecurso" title="Recurso..."></select>
+
+
+                </div>
+                <div class="col-md-2" id="DivBoton">
+
+                    <button class=" btn-success btn-lg" id="BTN_Crear" style="padding-top:10px;padding-bottom:25px;text-align:center; font-size:large">
+                        <span class="fa fa-play" style="font-size:large"></span><span>&nbsp; Iniciar Recurso</span>
+                    </button>
+
+                </div>
+                <div class=" col-md-2 ml-auto">
+                    <div id="time" style="font-size:250%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+
+</div>
+<div id="NuevaProduccion" style="display:none">
+    <h1 style="text-align:center">Apontamiento de Produccion</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Inicio</label>
+                    <input id="Inicio" class="form-control" value="0" />
+                </div>
+                <div class="col-md-3">
+                    <label>Fin</label>
+                    <input id="Fin" class="form-control" value="0" />
+                </div>
+                <div class="col-md-3">
+                    <label>Producto</label>
+                    <select id="Producto" onchange="LlenarComponentes()" class="form-control" asp-items="ViewBag.IdProducto"></select>
+                </div>
+                <div class="col-md-2">
+                    <label>Componente</label>
+
+                    @Html.DropDownListFor(m => m.IdActividadNavigation.IdComponente,
+                                                                          new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Componente1"),
+                                                                                 "Seleccione Componente",
+                                                                                 new { @class = "form-control", id = "Componente" })
+
+
+                </div>
+                @*<div class="col-md-3">
+            <label>Componente</label>
+            <select id="Componente" class="form-control" asp-items="ViewBag.Componenetes"></select>
+        </div>*@
+                @*<div class="col-md-3">
+                    <label>Operacion</label>
+                    <select id="Operacion" class="form-control" asp-items="ViewBag.Operaciones"></select>
+                </div>*@
+
+                <div class="col-md-2">
+                    <label>Operacion</label>
+
+                    @Html.DropDownListFor(m => m.IdActividadNavigation.IdOperacion,
+                                                                     new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Operacion1"),
+                                                                            "Seleccione Operacion",
+                                                                            new { @class = "form-control", id = "Operacion" })
+
+
+                </div>
+                <div class="col-md-3">
+                    <label>Cantidad</label>
+                    <input id="cantidadpr" type="number" class="form-control" value="0" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-bottom:10px">
+            <div class="row" style="float:right">
+                <div class="col-md-4" style="padding-left:10px;margin-left:40px">
+                    <button id="Apontar1" class="btn btn-outline-primary">
+                        <span class="fa fa-plus-circle" style="font-size:medium"></span><span>apuntar</span>
+                    </button>
+                </div>
+                <div class="col-md-5" style="float:right">
+                    <button id="Cancelar1" class="btn btn-outline-primary">
+
+                        <span class="fa fa-window-close" style="font-size:medium"></span><span>Cancelar</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div id="NuevaParada" style="display:none">
+    <h1 style="text-align:center">Apontamiento de Parada</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+           
+                    <label class="control-label">PeriodoTiempoInicio</label>
+                    <input id="PeriodoTiempoInicio" class ="form-control" />
+              
+                
+                    <label class="control-label" >PeriodoTiempoFin</label>
+                    <input id="PeriodoTiempoFin" class="form-control" />
+            
+                <div class="col-md-3">
+                    <label>Motivo Parada</label>
+                    <select id="MotParada" class="form-control" asp-items="ViewBag.IdMotivoParada"></select>
+                </div>
+                <div class="col-md-3">
+                    <label>Detalle Parada</label>
+                    <select id="DetalleParada" class="form-control" asp-items="ViewBag.IdDetalleParada"></select>
+                </div>
+                <div class="col-md-3">
+                    <label>Recurso Parda de:</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-bottom:10px">
+            <div class="row" style="float:right">
+                <div class="col-md-4" style="padding-left:20px;margin-left:120px">
+                    <button id="ApontarParada" class="btn btn-outline-primary">
+                        <span class="fa fa-pause" style="font-size:medium"></span><span>Encerrar Parada</span>
+                    </button>
+                </div>
+                <div class="col-md-5" style="float:right">
+                    <button id="CancelarParada" class="btn btn-outline-primary">
+
+                        <span class="fa fa-window-close" style="font-size:medium"></span><span>Cancelar Parada</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<h1 style="text-align:center">Produccion</h1>
+<div class="col-md-12">
+    <div class="card-body">
+        <div id="divGet">
+
+        </div>
+    </div>
+</div>
+<h1 style="text-align:center">Paradas</h1>
+
+<div class="col-md-12">
+    <div class="card-body">
+        <div id="divGetParadas">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+                    $(document).ready(function () {
+
+                    });
+        $("#btnmodelo1").click(function () {
+            var newProduccion = document.getElementById("NuevaProduccion");
+            newProduccion.style.display = 'block';
+
+            //$("#Inicio").val($("#time").val());
+
+        });
+        $("#Apontar1").click(function () {
+            var newProduccion = document.getElementById("NuevaProduccion");
+            newProduccion.style.display = 'none';
+        });
+        $("#Cancelar1").click(function () {
+            var newProduccion = document.getElementById("NuevaProduccion");
+            newProduccion.style.display = 'none';
+        });
+        $("#btnparada").click(function () {
+            var newProduccion = document.getElementById("NuevaParada");
+            newProduccion.style.display = 'block';
+        });
+        $("#ApontarParada").click(function () {
+            var newProduccion = document.getElementById("NuevaParada");
+            newProduccion.style.display = 'none';
+        //    $("#PeriodoTiempoInicio").val($("#time").val());
+        });
+        $("#CancelarParada").click(function () {
+            var newProduccion = document.getElementById("NuevaParada");
+            newProduccion.style.display = 'none';
+        });
+
+    $("#BTN_Crear").click(function () {
+        var urls = "@Url.Action("SaveMovimientoOLine", "TrMovimientoOnline")"
+        var fecha = $("#FechaP").val();
+        var encabezado = document.getElementById("encabezado1");
+        var recurso = $("#Recurso").val();
+        var data = {
+            Fecha: fecha,
+            IdRecurso: recurso,
+            IdTipoMovimiento: "82B37896-B91B-47F3-AF41-AA82FAD0325E",
+            IdEstado: "1E49CBEA-D13A-4CC4-B608-EE9E8D32ADC5"
+        };
+
+        $.post(urls, data).done(function (data) {
+            if (data.Ok) {
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                encabezado.style.display = 'block';
+                document.getElementById("DivIdRecurso").style.display = 'block';
+                document.getElementById("DivBoton").style.display = 'none';
+                $("#IdRecursoOnline").val(data.Id);
+
+
+                                                document.getElementById("FechaP").disabled = true;
+                document.getElementById("Recurso").disabled = true;
+                TraerDatosProduccion(data.Id);
+                TraerDatosParadas(data.Id);
+                                            }
+                                            else {
+                                                manejarErrorAjax();
+                                            }
+
+                                        }).fail(manejarErrorAjax).always(function () {
+                                        });
+                                    });
+   $("#Apontar1").click(function () {
+        var urls = "@Url.Action("SaveTrProduccion", "TrMovimientoOnline")"
+       var recurso = $("#Recurso").val();
+       var IdtrMovi = $("#IdRecursoOnline").val();
+        var encabezado = document.getElementById("encabezado1");
+       var cantidadpr = $("#cantidadpr").val();
+       var fin = $("#Fin").val();
+       var inicio = $("#Inicio").val();
+
+        var data = {
+            PeriodoTiempoInicio: inicio,
+            PeriodoTiempoFin: fin,
+            InicioReal:inicio,
+            FinReal:fin,
+            Cantidad: cantidadpr,
+            IdRecurso: recurso,
+
+            IdTrMovimiento: IdtrMovi,
+
+        };
+
+
+
+        $.post(urls, data).done(function (data) {
+            if (data.Ok) {
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                encabezado.style.display = 'block';
+                document.getElementById("DivIdRecurso").style.display = 'block';
+                document.getElementById("DivBoton").style.display = 'none';
+                $("#IdRecursoOnline").val(data.Id);
+
+
+                                                document.getElementById("FechaP").disabled = true;
+                document.getElementById("Recurso").disabled = true;
+                TraerDatosParadas(data.Id);
+                TraerDatosProduccion(data.Id);
+
+                                            }
+                                            else {
+                                                manejarErrorAjax();
+                                            }
+
+                                        }).fail(manejarErrorAjax).always(function () {
+                                        });
+                                    });
+    function manejarErrorAjax() {
+        Swal.fire({
+            icon: 'error',
+            title: "Se Produjo un Error",
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+    }
+
+    $("#ApontarParada").click(function () {
+        var urls = "@Url.Action("SaveTrParada", "TrMovimientoOnline")"
+        //var fecha = $("#FechaP").val();
+        //var encabezado = document.getElementById("encabezado1");
+        var idMotivoParada = $("#MotParada").val();
+        var periodoTiempoInicio = $("#PeriodoTiempoInicio").val();
+        var periodoTiempoFin = $("#PeriodoTiempoFin").val();
+        var detalleParada = $("#DetalleParada").val();
+        var idTrMovimiento = $("#IdRecursoOnline").val();
+         var disponible = $("#Disponible").val();
+         var cantidad = $("#Cantidad").val();
+         var recurso = $("#Recurso").val();
+        var data = {
+            IdMotivoParada: idMotivoParada,
+            PeriodoTiempoFin: periodoTiempoFin,
+            PeriodoTiempoInicio: periodoTiempoInicio,
+            FinReal: periodoTiempoFin,
+            InicioReal: periodoTiempoInicio,
+            IdDetalleDeParada: detalleParada,
+            IdTrMovimiento: idTrMovimiento,
+          //  Retroactiva: Retro,
+           // Horas: "100",
+
+
+        };
+
+        $.post(urls, data).done(function (data) {
+            if (data.Ok) {
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                //encabezado.style.display = 'block';
+                document.getElementById("DivIdRecurso").style.display = 'block';
+                document.getElementById("DivBoton").style.display = 'none';
+                $("#IdRecursoOnline").val(data.Id);
+
+
+                                                document.getElementById("FechaP").disabled = true;
+                document.getElementById("Recurso").disabled = true;
+                TraerDatosParadas(data.Id);
+                TraerDatosProduccion(data.Id);
+                           }
+                                            else {
+                                                manejarErrorAjax();
+                                            }
+
+                                        }).fail(manejarErrorAjax).always(function () {
+                                        });
+                                    });
+    function manejarErrorAjax() {
+        Swal.fire({
+            icon: 'error',
+            title: "Se Produjo un Error",
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+    }
+     function TraerDatosProduccion(id) {
+        var urlt = "@Url.Action("GetDatosProduccion", "TrMovimientoOnline")"
+         var data = { Id: id };
+         $.get(urlt, data).done(function (data) {
+             $("#Tabla").remove()
+
+             $("#divGet").append(data);
+         }).fail(manejarErrorAjax);
+     }
+    function TraerDatosParadas(id) {
+        var urlt = "@Url.Action("GetDatosParadas", "TrMovimientoOnline")"
+        var data = { Id: id };
+        $.get(urlt, data).done(function (data) {
+            $("#TablaParada").remove()
+
+            $("#divGetParadas").append(data);
+        }).fail(manejarErrorAjax);
+    }
+
+
+    function LlenarOperacion() {
+        var RecursoId = $('#Recurso').val();
+        $.ajax({
+            url: '/TrMovimientoOnline/FillOperacion',
+            type: "GET",
+            dataType: "JSON",
+            data: { IdRecurso: RecursoId },
+            success: function (Operaciones) {
+                $("#Operacion").html(""); // clear before appending new list 
+                $.each(Operaciones, function (i, Operacion) {
+                    $("#Operacion").append(
+                        $('<option></option>').val(Operacion.Id).html(Operacion.Operacion1));
+                });
+            }
+        });
+
+
+    }
+</script>

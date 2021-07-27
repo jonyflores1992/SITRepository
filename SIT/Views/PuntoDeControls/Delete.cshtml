@@ -1,0 +1,54 @@
+﻿@model SIT.Models.PuntoDeControl
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>¿Est seguro que desea borrar este elemento?</h3>
+<div>
+    <h4>PuntoDeControl</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @*@Html.DisplayNameFor(model => model.PuntoDeControl1)*@
+            <label>Punto de control</label>
+        </dt>
+        <dd class = "col-sm-10">
+            @*@Html.DisplayFor(model => model.PuntoDeControl1)*@
+            <label>Punto de control</label>
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DescripcionUbicacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DescripcionUbicacion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lat)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Long)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Long)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdOperacionNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdOperacionNavigation.Operacion1)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

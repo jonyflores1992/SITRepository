@@ -1,0 +1,179 @@
+﻿@model IEnumerable<SIT.Models.TrMovimientosDetalle>
+@{ Layout = null; }
+@*<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.semanticui.min.css">
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.semanticui.min.js"></script>*@
+@{
+    var producti = 0.0;
+    try
+    {
+          producti = (double)Model.Where(m => m.IdTipoProduccion.ToString() == "96472e15-3ba3-4c94-992c-1c6cc4d652db").Select(m => m.Productiva).Average();
+
+
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+
+    } }
+<div class="col-md-3">
+    <label id="productividadlabel" class="control-label">Productividad</label>
+    <input id="productividad" value="@producti.ToString()" class="form-control" />
+</div>
+<table id="Tabla" class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+               Tipo Producción
+            </th>
+            <th>
+                Inicio
+            </th>
+
+            <th>
+                Fin
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.InicioReal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinReal)
+            </th>*@
+            <th>
+                Horas
+            </th>
+            <th>
+                Producido
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disponible)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Productividad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.IdTrMovimientoNavigation)
+        </th>*@
+            <th>
+               Motivo Parada
+            </th>
+            <th>
+                Detalle Parada
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ if (Model != null)
+            {
+@foreach (var item in Model)
+{
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.IdTipoProduccionNavigation.TipoProduccion1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PeriodoTiempoInicio)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PeriodoTiempoFin)
+    </td>
+    @*<td>
+        @Html.DisplayFor(modelItem => item.InicioReal)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FinReal)
+    </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.Disponibles)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Productiva)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Disponible)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Productividad)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CreatedAt)
+    </td>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.IdTrMovimientoNavigation.Id)
+        </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.IdMotivoParadaNavigation.MotivoDeParada1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.IdDetalleDeParadaNavigation.DetalleDeParada1)
+    </td>
+    <td>
+        <a asp-action="../TrMovimientosDetalles/Edit" asp-route-id="@item.Id">Edit</a> |
+        <a asp-action="../TrMovimientosDetalles/Details" asp-route-id="@item.Id">Details</a> |
+        <a asp-action="../TrMovimientosDetalles/Delete" asp-route-id="@item.Id">Delete</a>
+    </td>
+</tr>
+} }}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+
+        $('#Tabla').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+            },
+
+            responsive: true,
+            autowidth: false,
+            destroy: true,
+            deferRender: true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: 'Excel',
+                    className: "btnArrow",
+                    title: 'Documento de excel',
+                    filename: 'Exportado',
+                    autoFilter: true,
+                    sheetName: 'Datos',
+                    messageTop: 'Listado'
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Documento PDF',
+                    text: 'PDF',
+                    className: "btnArrow",
+                    filename: 'Exportado',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    messageTop: 'Listado',
+                    download: 'open',
+                    customize: function (doc) {
+                        doc['footer'] = (function (page, pages) {
+                            return {
+                                columns: [{
+                                    alignment: 'center',
+                                    text: [
+                                        { text: page.toString(), italics: true },
+                                        ' of ',
+                                        { text: pages.toString(), italics: true }
+                                    ]
+                                }],
+                                margin: [10, 0]
+                            }
+                        });
+                    }
+                }
+            ]
+
+        });
+    });
+</script>

@@ -1,0 +1,271 @@
+﻿@model SIT.Models.DefectosCalidad
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = null;
+//    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+    <script src="~/js/main.js"></script>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    function Redirigir() {
+        var url = $('#RedirectTo').val();
+        location.href = url;
+    }
+    function FillGrupoRecursos() {
+        $("#IdGrupoRecurso").empty();
+        var SectorId = $('#IdSector').val();
+        $.ajax({
+            url: '/DefectosCalidads/FillGrupoRecursos',
+            type: "GET",
+            dataType: "JSON",
+            data: { idsector: SectorId },
+            success: function (GrupoRecursos) {
+ 
+                $("#IdGrupoRecurso").append("<option value>Seleccione Grupo...</option>")
+                $.each(GrupoRecursos, function (i, GrupoR) {
+                    $("#IdGrupoRecurso").append($('<option></option>').val(GrupoR.Id).html(GrupoR.Grupo));
+
+                });
+
+            }
+        });
+    }
+    function FillRecursos() {
+        var Idgruporecurso = $('#IdGrupoRecurso').val();
+        $.ajax({
+            url: '/DefectosCalidads/FillRecursos',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { idGrupoRecurso: Idgruporecurso },
+            success: function (Recursos) {
+                $("#IdRecurso").empty();
+                $("#IdRecurso").append("<option value>Seleccione Recurso...</option>")
+                $.each(Recursos, function (i, recurso) {
+                    $("#IdRecurso").append(
+                        $('<option></option>').val(recurso.Id).html(recurso.Nombre));
+                });
+
+            }
+        });
+    }
+    function FillComponentes() {
+        var IdProducto = $('#IdProducto').val();
+        $.ajax({
+            url: '/DefectosCalidads/FillComponente',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { idproducto: IdProducto },
+            success: function (componentes) {
+                $("#IdComponente").empty();
+                $("#IdComponente").append("<option value>Seleccione Componente...</option>")
+                $.each(componentes, function (i, componente) {
+                    $("#IdComponente").append(
+                        $('<option></option>').val(componente.Id).html(componente.Componente1).select(false));
+                });
+
+            }
+        });
+    }
+
+</script>
+@*@using (Html.BeginForm("Create", "DefectosCalidads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {*@
+<h2 style="text-align:center">Defectos Calidad</h2>
+<hr />
+<div class="flex">
+    <div class="row">
+        <form asp-action="CreateDefecto" onsubmit="return JQueryAjaxPost(this);"autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.Hidden("RedirectTo", Url.Action("Index", "DefectosCalidads"));
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+
+                                <label class="control-label">Sector:</label>
+                                @Html.DropDownListFor(model => model.IdSector
+                           , new SelectList(Model.sectorCollection, "Id", "Sector1"),
+
+                           "Seleccione Sector...",
+                           new { @class = "form-control", @onchange = "FillGrupoRecursos()" })
+                                @*<select id="IdSector" class="form-control" onselect="" asp-items="ViewBag.IdSector"></select>*@
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="control-label">Grupo Recurso:</label>
+                                @Html.DropDownList("IdGrupoRecurso",
+
+                                                    new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Grupo", false),
+                                                    "Seleccione Grupo...",
+                                                    new { @class = "form-control", onchange = "FillRecursos()", id = "IdGrupoRecurso" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="control-label">Recurso:</label>
+                                @Html.DropDownList("IdRecurso",
+                               new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Nombre", false), "Seleccione recurso...",
+                               new { @class = "form-control", id = "IdRecurso" })
+
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="control-label">Producto:</label>
+                                @Html.DropDownListFor(model => model.IdProducto
+                                     , new SelectList(Model.productoCollection, "Id", "Producto1"),
+
+                                     "Seleccione Producto...",
+                                     new { @class = "form-control", @onchange = "FillComponentes()" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label class="control-label">Componente:</label>
+                                @Html.DropDownList("IdComponente",
+                                    new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Componente1",false), "Seleccione componente...",
+                                    new { @class = "form-control", id = "IdComponente" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="control-label">Codigo:</label>
+                                <input asp-for="Codigo" id="Codigo" class="form-control" />
+                                <span asp-validation-for="Codigo" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="control-label">Defecto</label>
+                                <input asp-for="Defecto" id="Defecto" class="form-control" />
+                                <span asp-validation-for="Defecto" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-lg-3">
+                                <label asp-for="Status" class="control-label">Status:</label>
+                                <select asp-for="Status" id="Status" class="form-control" asp-items="ViewBag.Status"></select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12" style="width:100%">
+                                <label asp-for="DescripcionDefecto" class="control-label"></label>
+                                <input asp-for="DescripcionDefecto" id="DescripcionDefecto" class="form-control" />
+                                <span asp-validation-for="DescripcionDefecto" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <button type="button" id="btnRegresar" class=" btn btn-success m-1" style="width:120px;height:35px;font-size:medium;">
+                            <i class="fas fa-backward"></i>
+                            Regresar
+
+                        </button>
+
+                        <button type="submit" id="btnGuardars" class=" btn btn-primary m-1" style="width:120px;height:35px; font-size:medium;">
+                            <i class="fas fa-save"></i>
+                            Crear
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+@*}*@
+@*}*@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    $("#btnGuardar").click(function () {
+        var urls = "@Url.Action("SaveDefectosCalidad", "DefectosCalidads")"
+        var sector = $("#IdSector").val();
+        var gruposector = $("#IdGrupoRecurso").val();
+        var recurso = $("#IdRecurso").val();
+        var producto = $("#IdProducto").val();
+        var componente = $("#IdComponente").val();
+        var codigo = $("#Codigo").val();
+        var defecto = $("#Defecto").val();
+        var status = $("#Status").val();
+        var descripciondefecto = $("#DescripcionDefecto").val();
+        if (sector == "") {
+            alert("Seleccione Sector")
+            return;
+        }
+
+        if (codigo == "") {
+            alert("Ingrese Codigo")
+            return;
+        }
+        if (defecto == "") {
+            alert("Ingrese defecto")
+            return;
+        }
+
+        var data = {
+            Sector: sector,
+            GrupoRecurso: gruposector,
+            Recurso: recurso,
+            Producto: producto,
+            Componente: componente,
+            Codigo: codigo,
+            Defecto: defecto,
+            Status:status,
+            DescripcionDefecto:descripciondefecto
+        };
+        $.post(urls, data).done(function (data) {
+            if (data.Ok) {
+                $("#view-all").html(data.html);
+                $("#form-modal .modal-body").html('');
+                $("#form-modal .modal-title").html('');
+                $("#form-modal").modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Guardado con exito',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                
+            }
+            else {
+                $("#form-modal .modal-body").html(data.html);
+                manejarErrorAjax();
+            }
+        }).fail(manejarErrorAjax).always(function () {
+
+        });
+    });
+    $("#btnRegresar").click(function () {
+        Redirigir();
+    });
+    function manejarErrorAjax() {
+        Swal.fire({
+            icon: 'error',
+            title: "Se Produjo un Error",
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+    }
+</script>

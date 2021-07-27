@@ -1,0 +1,33 @@
+﻿<ejs-grid id="Grid" dataSource="@ViewBag.datasource" height="272" allowPaging="true" allowResizing="true" allowSorting="true" allowReordering="true" allowGrouping="true" toolbar="@(new List<string>() { "Search", "Add", "Edit", "Delete","Update","Cancel" , "ExcelExport" })" allowFiltering="true" allowSelection="true" allowExcelExport="true" toolbarClick="toolbarClick">
+    <e-grid-pagesettings pageSize="12" />
+    <e-grid-filterSettings type="Menu"></e-grid-filterSettings>
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
+    <e-grid-selectionsettings type="Single"></e-grid-selectionsettings>
+    <e-grid-columns>
+        <e-grid-column type="checkbox" width="50"></e-grid-column>
+        <e-grid-column field="Id" headerText="Id" isPrimaryKey="true" isIdentity="true"></e-grid-column>
+        <e-grid-column field="Sector1" headerText="Sector1"></e-grid-column>
+        <e-grid-column field="Orden" headerText="Orden"></e-grid-column>
+        <e-grid-column field="Status" headerText="Status"></e-grid-column>
+        <e-grid-column field="Foto" headerText="Foto"></e-grid-column>
+        <e-grid-column field="CreatedAt" headerText="CreatedAt"></e-grid-column>
+        <e-grid-column field="UpdateAt" headerText="UpdateAt"></e-grid-column>
+        <e-grid-column field="Delete" headerText="Delete"></e-grid-column>
+        <e-grid-column field="IdEmpresa" headerText="IdEmpresa"></e-grid-column>
+        <e-grid-column field="IdEmpresaNavigation" headerText="IdEmpresaNavigation"></e-grid-column>
+        <e-grid-column field="StatusNavigation" headerText="StatusNavigation"></e-grid-column>
+        <e-grid-column field="DetalleDeParada" headerText="DetalleDeParada"></e-grid-column>
+        <e-grid-column field="GrupoRecurso" headerText="GrupoRecurso"></e-grid-column>
+        <e-grid-column field="Recurso" headerText="Recurso"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+<script>
+   
+    
+    function toolbarClick(args) {
+        if (args.item.id === this.element.id + '_excelexport') {
+            this.excelExport();
+        }
+    }
+</script>
+

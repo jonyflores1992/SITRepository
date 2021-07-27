@@ -1,0 +1,60 @@
+﻿@model SIT.Models.DetalleDeParada
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/SidebarMenu.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>DetalleDeParada</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="DetalleDeParada1" class="control-label">Detalle de parada</label>
+                <input asp-for="DetalleDeParada1" class="form-control" />
+                <span asp-validation-for="DetalleDeParada1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdSector" class="control-label">Sector</label>
+                <select asp-for="IdSector" class="form-control" asp-items="ViewBag.IdSector"></select>
+                <span asp-validation-for="IdSector" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdGrupoDeRecurso" class="control-label">Grupo De Recurso</label>
+                <select asp-for="IdGrupoDeRecurso" class="form-control" asp-items="ViewBag.IdGrupoDeRecurso">Grupo de recurso</select>
+                <span asp-validation-for="IdGrupoDeRecurso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdMotivoParada" class="control-label">Motivo De Parada</label>
+                <select asp-for="IdMotivoParada" class="form-control" asp-items="ViewBag.IdMotivoParada">Motivo de parada</select>
+                <span asp-validation-for="IdMotivoParada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status">Estatus</select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
